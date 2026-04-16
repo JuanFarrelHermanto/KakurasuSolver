@@ -533,7 +533,7 @@ public class KakurasuSolverGui extends javax.swing.JFrame {
                 PrintWriter writerNoPrep = new PrintWriter(new FileWriter(outputFileName + "_NoPrep.csv"));
                 PrintWriter writerWithPrep = new PrintWriter(new FileWriter(outputFileName + "_WithPrep.csv"));
                 
-                String header = "No,Size,Fitness,LockedCells_Preprocessing,Total_Cells,Reduction_Persentage";
+                String header = "No;Size;Fitness;isSolved;LockedCells_Preprocessing;Total_Cells;Reduction_Persentage";
                 writerNoPrep.println(header);
                 writerWithPrep.println(header);
                 
@@ -580,16 +580,15 @@ public class KakurasuSolverGui extends javax.swing.JFrame {
                     solver.solve();
                     
                     double fitness = solver.getBestFitness();
-                    int lockedCells = solver.getLockedCellsCount();
-                    double percent = ((double) lockedCells / currTotalCells) * 100.0;
+                    if (fitness == 0.0) solutionsFound_1++;
+                    int isSolved = (fitness == 0.0) ? 1 : 0;
                     
-                    writerNoPrep.printf("%d,%dx%d,%.1f,%d,%d,%.2f\n", (i + 1), puzzle.size, puzzle.size, fitness, 0, currTotalCells, 0.0);
+                    writerNoPrep.printf("%d;%dx%d;%.1f;%d;%d;%d;%.2f\n", (i + 1), puzzle.size, puzzle.size, fitness, isSolved, 0, currTotalCells, 0.0);
                     
                     totalCellsOverall_1 += currTotalCells;
+                    if (isSolved == 1) solutionsFound_1++;
                     
-                    if (fitness == 0.0) solutionsFound_1++;
-                    
-                    System.out.printf("Soal %03d | Ukuran: %dx%d | Fitness: %6.1f\n", (i + 1), puzzle.size, puzzle.size, fitness);
+                    System.out.printf("Soal %03d | Ukuran: %dx%d | Fitness: %.1f\n", (i + 1), puzzle.size, puzzle.size, fitness);
                 }
                 writerNoPrep.close();
                 System.out.println("Fase 1 Selesai. (Akurasi: " + solutionsFound_1 + "/" + totalPuzzles + ")\n");
@@ -610,12 +609,15 @@ public class KakurasuSolverGui extends javax.swing.JFrame {
                     double fitness = solver.getBestFitness();
                     int lockedCells = solver.getLockedCellsCount();
                     double percent = ((double) lockedCells / currTotalCells) * 100.0;
+                    int isSolved = (fitness == 0.0) ? 1 : 0;
                     
-                    writerWithPrep.printf("%d,%dx%d,%.1f,%d,%d,%.2f\n", (i + 1), puzzle.size, puzzle.size, fitness, lockedCells, currTotalCells, percent);
+                    writerWithPrep.printf("%d;%dx%d;%.1f;%d;%d;%d;%.2f\n", (i + 1), puzzle.size, puzzle.size, fitness, isSolved, lockedCells, currTotalCells, percent);
                     
                     totalCellsOverall_2 += currTotalCells;
                     totalLockedOverall_2 += lockedCells;
                     if (fitness == 0.0) solutionsFound_2++;
+                    
+                    System.out.printf("Soal %03d | Ukuran: %dx%d | Fitness: %.1f | Total Cells Locked: %d \n", (i + 1), puzzle.size, puzzle.size, fitness, lockedCells);
                 }
                 writerWithPrep.close();
                 System.out.println("Fase 2 Selesai. (Akurasi: " + solutionsFound_2 + "/" + totalPuzzles + ")\n");
