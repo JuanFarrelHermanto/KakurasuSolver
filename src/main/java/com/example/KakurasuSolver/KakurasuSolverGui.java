@@ -525,7 +525,7 @@ public class KakurasuSolverGui extends javax.swing.JFrame {
         btnSolve.setEnabled(false);
         btnParameter.setEnabled(false);
         btnExperiment.setEnabled(false);
-        labelStatus.setText("Eksperimen sedang dilakukan...");
+        labelStatus.setText("Sedang melakukan eksperimen...");
         
         new Thread(() -> {
             try {
@@ -533,7 +533,7 @@ public class KakurasuSolverGui extends javax.swing.JFrame {
                 PrintWriter writerNoPrep = new PrintWriter(new FileWriter(outputFileName + "_NoPrep.csv"));
                 PrintWriter writerWithPrep = new PrintWriter(new FileWriter(outputFileName + "_WithPrep.csv"));
                 
-                String header = "No;Size;Fitness;isSolved;LockedCells_Preprocessing;Total_Cells;Reduction_Persentage";
+                String header = "No;Category;Fitness;Is_Solved;LockedCells_Preprocessing;Total_Cells;Reduction_Persentage";
                 writerNoPrep.println(header);
                 writerWithPrep.println(header);
                 
@@ -560,9 +560,6 @@ public class KakurasuSolverGui extends javax.swing.JFrame {
                 sc.close();
                 
                 int totalPuzzles = expPuzzles.size();
-                int totalCellsOverall = 0;
-                int totalLockedOverall = 0;
-                int solutionsFound = 0;
                 
                 System.out.println("=== MEMULAI EKSPERIMEN: " + file.getName() + " ===");
                 System.out.println("Total Soal: " + totalPuzzles);
@@ -576,14 +573,21 @@ public class KakurasuSolverGui extends javax.swing.JFrame {
                     KakurasuPuzzle puzzle = expPuzzles.get(i);
                     int currTotalCells = puzzle.size * puzzle.size;
                     
+                    String kategori = "";
+                    if (i < 100) kategori = "7x7 Easy";
+                    else if (i < 200) kategori = "7x7 Hard";
+                    else if (i < 300) kategori = "8x8 Easy";
+                    else if (i < 400) kategori = "8x8 Hard";
+                    else if (i < 500) kategori = "9x9 Easy";
+                    else kategori = "9x9 Hard";
+                    
                     WaOASolver solver = new WaOASolver(puzzle, popSize, maxIter, lb, ub, false);
                     solver.solve();
                     
                     double fitness = solver.getBestFitness();
-                    if (fitness == 0.0) solutionsFound_1++;
                     int isSolved = (fitness == 0.0) ? 1 : 0;
                     
-                    writerNoPrep.printf("%d;%dx%d;%.1f;%d;%d;%d;%.2f\n", (i + 1), puzzle.size, puzzle.size, fitness, isSolved, 0, currTotalCells, 0.0);
+                    writerNoPrep.printf("%d;%s;%.1f;%d;%d;%d;%.2f\n", (i + 1), kategori, fitness, isSolved, 0, currTotalCells, 0.0);
                     
                     totalCellsOverall_1 += currTotalCells;
                     if (isSolved == 1) solutionsFound_1++;
@@ -603,6 +607,14 @@ public class KakurasuSolverGui extends javax.swing.JFrame {
                     KakurasuPuzzle puzzle = expPuzzles.get(i);
                     int currTotalCells = puzzle.size * puzzle.size;
                     
+                    String kategori = "";
+                    if (i < 100) kategori = "7x7 Easy";
+                    else if (i < 200) kategori = "7x7 Hard";
+                    else if (i < 300) kategori = "8x8 Easy";
+                    else if (i < 400) kategori = "8x8 Hard";
+                    else if (i < 500) kategori = "9x9 Easy";
+                    else kategori = "9x9 Hard";
+                    
                     WaOASolver solver = new WaOASolver(puzzle, popSize, maxIter, lb, ub, true); 
                     solver.solve();
                     
@@ -611,11 +623,11 @@ public class KakurasuSolverGui extends javax.swing.JFrame {
                     double percent = ((double) lockedCells / currTotalCells) * 100.0;
                     int isSolved = (fitness == 0.0) ? 1 : 0;
                     
-                    writerWithPrep.printf("%d;%dx%d;%.1f;%d;%d;%d;%.2f\n", (i + 1), puzzle.size, puzzle.size, fitness, isSolved, lockedCells, currTotalCells, percent);
+                    writerWithPrep.printf("%d;%s;%.1f;%d;%d;%d;%.2f\n", (i + 1), kategori, fitness, isSolved, lockedCells, currTotalCells, percent);
                     
                     totalCellsOverall_2 += currTotalCells;
                     totalLockedOverall_2 += lockedCells;
-                    if (fitness == 0.0) solutionsFound_2++;
+                    if (isSolved == 1) solutionsFound_2++;
                     
                     System.out.printf("Soal %03d | Ukuran: %dx%d | Fitness: %.1f | Total Cells Locked: %d \n", (i + 1), puzzle.size, puzzle.size, fitness, lockedCells);
                 }
@@ -629,11 +641,11 @@ public class KakurasuSolverGui extends javax.swing.JFrame {
                 
                 String popUpMessage = "Eksperimen Selesai!\n\n" +
                         "[Fase 1: Murni WaOA]\n" +
-                        "Akurasi: " + solutionsFound_1 + "/" + totalPuzzles + " (" + String.format(java.util.Locale.US, "%.1f", acc1) + "%)\n\n" +
+                        "Akurasi: " + solutionsFound_1 + "/" + totalPuzzles + " (" + String.format("%.1f", acc1) + "%)\n\n" +
                         "[Fase 2: WaOA + Preprocessing]\n" +
-                        "Total Sel Terkunci: " + totalLockedOverall_2 + " dari " + totalCellsOverall_2 + " (" + String.format(java.util.Locale.US, "%.1f", prepPercent) + "%)\n" +
-                        "Akurasi: " + solutionsFound_2 + "/" + totalPuzzles + " (" + String.format(java.util.Locale.US, "%.1f", acc2) + "%)\n\n" +
-                        "2 File CSV telah disimpan di folder Dataset!";
+                        "Akurasi: " + solutionsFound_2 + "/" + totalPuzzles + " (" + String.format("%.1f", acc2) + "%)\n" +
+                        "Reduksi Ruang Total: " + String.format("%.1f", prepPercent) + "%\n\n" +
+                        "Hasil Eksperimen berhasil disimpan.";
                 
                 javax.swing.SwingUtilities.invokeLater(() -> {
                     labelStatus.setText("Eksperimen selesai!");
