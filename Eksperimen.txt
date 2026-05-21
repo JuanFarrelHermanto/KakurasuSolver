@@ -1,0 +1,75 @@
+V-Shaped
+Random
+0,5
+0,3
+
+S-Shaped
+Random
+0,5
+0,3
+
+
+Default: Populasi = 100; MaxIter = 1000; lb = -5.0; ub = 5,0
+
+Populasi:
+1000
+10000
+
+MaxIter:
+10000
+100000
+
+lb, ub:
+-3.0, 3.0
+-1.0, 1.0
+
+V-Shaped:
+1) V-Shaped Random default (Done)
+2) V-Shaped Random Populasi = 1000 (Sisanya default) (Done)
+3) V-Shaped Random Populasi = 10000 (Sisanya default) (Done)
+4) V-Shaped Random MaxIter = 10000 (Sisanya default) (Done)
+5) V-Shaped Random MaxIter = 100000 (Sisanya default) (Done)
+6) V-Shaped Random lb,ub = -3.0, 3.0 (Sisanya default) (Done)
+7) V-Shaped Random lb,ub = -1.0, 1.0 (Sisanya default) (Done)
+
+8) V-Shaped 0,5 default (Done)	
+9) V-Shaped 0,5 Populasi = 1000 (Sisanya default) (Done)
+10) V-Shaped 0,5 Populasi = 10000 (Sisanya default) (Done)
+11) V-Shaped 0,5 MaxIter = 10000 (Sisanya default) (Done)
+12) V-Shaped 0,5 MaxIter = 100000 (Sisanya default) (Done)
+13) V-Shaped 0,5 lb,ub = -3.0, 3.0 (Sisanya default) (Done)
+14) V-Shaped 0,5 lb,ub = -1.0, 1.0 (Sisanya default) (Done)
+
+15) V-Shaped 0,3 default (Done)
+16) V-Shaped 0,3 Populasi = 1000 (Sisanya default) (Done)
+17) V-Shaped 0,3 Populasi = 10000 (Sisanya default) (Done)
+18) V-Shaped 0,3 MaxIter = 10000 (Sisanya default) (Done)
+19) V-Shaped 0,3 MaxIter = 100000 (Sisanya default) (Done)
+20) V-Shaped 0,3 lb,ub = -3.0, 3.0 (Sisanya default) (Done)
+21) V-Shaped 0,3 lb,ub = -1.0, 1.0 (Sisanya default) (Done)
+
+
+S-Shaped:
+1) S-Shaped Random default (Done)
+2) S-Shaped Random Populasi = 1000 (Sisanya default) (Done)
+3) S-Shaped Random Populasi = 10000 (Sisanya default) (Done)
+4) S-Shaped Random MaxIter = 10000 (Sisanya default) (Done)
+5) S-Shaped Random MaxIter = 100000 (Sisanya default) (Proses)
+6) S-Shaped Random lb,ub = -3.0, 3.0 (Sisanya default) (Done)
+7) S-Shaped Random lb,ub = -1.0, 1.0 (Sisanya default) (Done)
+
+8) S-Shaped 0,5 default (Done)
+9) S-Shaped 0,5 Populasi = 1000 (Sisanya default) (Done)
+10) S-Shaped 0,5 Populasi = 10000 (Sisanya default) (Done)
+11) S-Shaped 0,5 MaxIter = 10000 (Sisanya default) (Done)
+12) S-Shaped 0,5 MaxIter = 100000 (Sisanya default) (Done)
+13) S-Shaped 0,5 lb,ub = -3.0, 3.0 (Sisanya default) (Done)
+14) S-Shaped 0,5 lb,ub = -1.0, 1.0 (Sisanya default) (Done)
+
+15) S-Shaped 0,3 default (Done)
+16) S-Shaped 0,3 Populasi = 1000 (Sisanya default) (Done)
+17) S-Shaped 0,3 Populasi = 10000 (Sisanya default) (Done)
+18) S-Shaped 0,3 MaxIter = 10000 (Sisanya default) (Done)
+19) S-Shaped 0,3 MaxIter = 100000 (Sisanya default) (Done)
+20) S-Shaped 0,3 lb,ub = -3.0, 3.0 (Sisanya default) (Done)
+21) S-Shaped 0,3 lb,ub = -1.0, 1.0 (Sisanya default) (Done)
